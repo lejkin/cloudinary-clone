@@ -16,6 +16,7 @@ except:
     PRESETS = {}
 
 SYNC_PREFIXES        = ['images_staging', 'profile_images_staging']
+UPLOADED_PHOTOS_DEST = '/tmp/phots'
 S3_BUCKET_LOCAL_DIR  = '/opt/cloudinary/tmp'
 AWS_S3_BUCKET        = 'bucket_name'
 
