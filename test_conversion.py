@@ -1,8 +1,20 @@
-from app import parse_options
 from ImageProcessor import ImageProcessor
 import json, sys
 import shutil, os
 import glob
+
+def parse_options(raw_options):
+    options = {}
+    opts_list = raw_options.split(',')
+    for opt in opts_list:
+        k, w = opt.split('_', 1)
+        if '_' in w:
+            opts = w.split('_')
+        else:
+            opts = w
+        options[k] = opts
+    return options
+
 
 #terminal collors
 class bcolors:
