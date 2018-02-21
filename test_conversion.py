@@ -38,14 +38,14 @@ try:
     with open('presets.json') as f:
         PRESETS = json.load(f)
 except Exception as error:
-    print error
+    print(error)
     sys.exit(1)
 
 
 
 ## convert all files from parameters present in presets.json
 for image_filename in glob.iglob('images/*'):
-    print image_filename
+    print(image_filename)
     for present in PRESETS:
         try:
             #print present, PRESETS[present]
@@ -58,10 +58,10 @@ for image_filename in glob.iglob('images/*'):
             with open(output_filename ,'wb') as output:
                 output.write(buff.getvalue())
 
-            print bcolors.OKGREEN, 'success', image_filename, present, bcolors.ENDC
+            print(bcolors.OKGREEN, 'success', image_filename, present, bcolors.ENDC)
 
         except Exception as error:
-            print bcolors.FAIL, 'error', image_filename, present, error, bcolors.ENDC
+            print(bcolors.FAIL, 'error', image_filename, present, error, bcolors.ENDC)
 
 
 
