@@ -16,7 +16,6 @@ except:
     PRESETS = {}
 
 SYNC_PREFIXES        = ['images_staging', 'profile_images_staging']
-UPLOADED_PHOTOS_DEST = '/tmp/phots'
 S3_BUCKET_LOCAL_DIR  = '/opt/cloudinary/tmp'
 AWS_S3_BUCKET        = 'bucket_name'
 
@@ -174,6 +173,7 @@ def parse_options(raw_options):
     return options
 
 
+### automatic sync files from s3 bucket on local server.
 
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
