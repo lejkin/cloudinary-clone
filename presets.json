@@ -1,0 +1,8 @@
+{
+    "ui": "h_52,w_52,c_thumb,g_face",
+    "up": "h_100,w_100,c_thumb,g_face",
+    "stp": "c_pad,g_center,h_148,w_255,q_90",
+    "sts": "c_pad,g_center,h_113,w_192,q_90",
+    "stc": "c_fill,g_center,w_145,h_70,q_90",
+    "sp": "c_pad,g_center,h_400,w_670"
+}

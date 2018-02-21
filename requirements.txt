@@ -1,0 +1,6 @@
+flask
+pillow
+flask_uploads
+boto3
+face_recognition
+webcolors
