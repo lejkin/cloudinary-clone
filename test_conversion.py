@@ -28,8 +28,8 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-## remove actual files
-shutil.rmtree("output")
+## remove and recreate actual file dir whether it exist or not
+shutil.rmtree("output", ignore_errors=True)
 os.mkdir("output")
 
 
