@@ -1,7 +1,10 @@
+import unittest
+
 from ImageProcessor import ImageProcessor
-import json, sys
+import json
 import shutil, os
 import glob
+
 
 def parse_options(raw_options):
     options = {}
@@ -16,53 +19,33 @@ def parse_options(raw_options):
     return options
 
 
-#terminal collors
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+class ConversionTest(unittest.TestCase):
+    def setUp(self):
+        shutil.rmtree("output", ignore_errors=True)
+        os.mkdir("output")
+
+        with open('presets.json') as f:
+            self.PRESETS = json.load(f)
+
+        self.images = glob.iglob('images/*')
+
+    def test_convert(self):
+        """
+        Test that images converted as expected and saved w/o errors
+        """
+        for image_filename in self.images:
+            for present in self.PRESETS:
+                with self.subTest(name='{}: {}'.format(image_filename, present)):
+                    p = ImageProcessor('./{}'.format(image_filename))
+                    buff = p.process(parse_options(self.PRESETS[present]))
+
+                    output_filename = "output/{}_{}".format(present, image_filename.split('/')[-1])
+
+                    with open(output_filename, 'wb') as output:
+                        output.write(buff.getvalue())
+                    assert os.path.exists(output_filename) and os.path.getsize(
+                        output_filename) > 0, 'Image is empty or not saved'
 
 
-## remove actual files
-shutil.rmtree("output")
-os.mkdir("output")
-
-
-## get list of parameters test
-try:
-    with open('presets.json') as f:
-        PRESETS = json.load(f)
-except Exception as error:
-    print(error)
-    sys.exit(1)
-
-
-
-## convert all files from parameters present in presets.json
-for image_filename in glob.iglob('images/*'):
-    print(image_filename)
-    for present in PRESETS:
-        try:
-            #print present, PRESETS[present]
-
-            p = ImageProcessor('./{}'.format(image_filename) )
-            buff = p.process(parse_options(PRESETS[present]))
-
-            output_filename = "output/" + present + "_" + str(image_filename.split('/')[-1])
-
-            with open(output_filename ,'wb') as output:
-                output.write(buff.getvalue())
-
-            print(bcolors.OKGREEN, 'success', image_filename, present, bcolors.ENDC)
-
-        except Exception as error:
-            print(bcolors.FAIL, 'error', image_filename, present, error, bcolors.ENDC)
-
-
-
-
+if __name__ == '__main__':
+    unittest.main()
